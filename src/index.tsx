@@ -1,12 +1,3 @@
-import React, { FC, HTMLAttributes, ReactChild } from 'react';
-
-export interface Props extends HTMLAttributes<HTMLDivElement> {
-  children?: ReactChild;
-}
-
-/**
- * A tree view component.
- */
-export const Wood: FC<Props> = ({ children }) => {
-  return <div>{children || '🌳'}</div>;
-};
+export { ITreeProps, Tree } from './Tree';
+export { ITreeNodeProps, TreeNode } from './TreeNode';
+export { ItemType, ITreeItem, IParentItem, IChildItem } from './types';

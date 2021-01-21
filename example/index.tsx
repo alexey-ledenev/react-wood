@@ -1,12 +1,13 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Thing } from '../.';
+import { Tree } from '../src';
+import { MOCK_DATA } from '../mock';
 
 const App = () => {
   return (
     <div>
-      <Thing />
+      <Tree nodes={MOCK_DATA} />
     </div>
   );
 };
