@@ -9,7 +9,9 @@ export const treeStateContext = createContext<ITreeState>(
 
 export interface ITreeActions {
   toggleExpanded: (item: ITreeItem) => void;
+  toggleSelected: (item: ITreeItem) => void;
 }
 export const treeActionsContext = createContext<ITreeActions>({
   toggleExpanded: noop,
+  toggleSelected: noop,
 });

@@ -1,0 +1,45 @@
+$iconWidth: 0.5em
+
+.container, .node
+  position: relative
+
+.container
+  font-size: 1rem
+  font-family: BlinkMacSystemFont, -apple-system, system-ui, sans-serif
+  &, *
+    box-sizing: border-box
+
+.node
+  margin-left: 0
+  cursor: pointer
+  &[disabled]
+    cursor: not-allowed
+  & > &
+    margin-left: $iconWidth
+  &.selected > &_content &_label, &_label.selected
+    font-weight: bold
+  &_content, &_label
+    display: flex
+    flex-direction: row
+    justify-content: flex-start
+  &_content
+    width: 100%
+  &_label
+    align-items: center
+    align-self: center
+    overflow: hidden
+    text-overflow: ellipsis
+    white-space: nowrap
+
+  &_icon
+    flex-shrink: 0
+    max-width: 20%
+    overflow: hidden
+    margin-right: #{$iconWidth + $iconWidth}
+
+.parent_svg
+  display: inline-block
+  width: $iconWidth
+  height: auto
+  &.expanded
+    transform: rotate(90deg)

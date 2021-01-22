@@ -3,3 +3,10 @@ export interface ITreeItem {
   label: string;
   childs?: ITreeItem[] | null;
 }
+
+export enum SelectionType {
+  Childs = 'childs',
+  Parents = 'parents',
+  All = 'all',
+  None = 'none',
+}

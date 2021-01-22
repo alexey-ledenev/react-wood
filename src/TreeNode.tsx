@@ -1,44 +1,126 @@
-import React, { FC } from 'react';
+import React, { FC, ReactNode, useRef } from 'react';
 import cn from './utils/classNames';
+import { ITreeItem } from './types';
 import { useTreeActions } from './context/useTreeActions';
 import { useTreeState } from './context/useTreeState';
-import { ITreeItem } from './types';
+import { NodeContent } from './NodeContent';
+import { NodeLabel } from './NodeLabel';
+import { NodeIcon } from './NodeIcon';
+import s from './styles/Tree.module.sass';
 
 export interface ITreeNodeProps {
   item: ITreeItem;
+  className?: string;
+  activeClassName?: string;
+  contentClassName?: string;
+  iconBoxClassName?: string;
+  iconClassName?: string;
+  labelClassName?: string;
+  renderData?: (node: ITreeItem, selected: boolean) => ReactNode;
+  renderIcon?: (
+    expanded: boolean,
+    selected: boolean,
+    isParent: boolean,
+    node: ITreeItem
+  ) => ReactNode;
+  loader?: ReactNode;
 }
 
-export const TreeNode: FC<ITreeNodeProps> = ({ item }) => {
-  const { toggleExpanded } = useTreeActions();
-  const { expandedIds = Object.create(null) } = useTreeState();
-  const withChilds = item.childs !== void 0;
-  const expanded = expandedIds[item.id] === true;
+const DBL_CLICK_DELAY = 200;
 
-  const onNodeExpand = () => {
-    toggleExpanded(item);
+export const TreeNode: FC<ITreeNodeProps> = ({
+  item,
+  className,
+  activeClassName,
+  contentClassName,
+  iconBoxClassName,
+  iconClassName,
+  labelClassName,
+  renderData,
+  renderIcon,
+  loader,
+  children,
+}) => {
+  const doubleClickCheck = useRef({
+    timer: 0,
+    prevent: false,
+  });
+  const { toggleExpanded, toggleSelected } = useTreeActions();
+  const { expandedIds, selectedNodes } = useTreeState();
+  const withChilds = item.childs !== void 0;
+  const expanded = expandedIds?.[item.id] === true;
+  const selected = selectedNodes?.[item.id] !== undefined;
+
+  const onSelectNode = (node: ITreeItem) => {
+    toggleSelected(node);
   };
+
+  const onNodeClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    e.stopPropagation();
+    doubleClickCheck.current.timer = window.setTimeout(() => {
+      if (!doubleClickCheck.current.prevent) {
+        if (e.ctrlKey || e.metaKey) {
+          onSelectNode(item);
+        } else {
+          toggleExpanded(item);
+        }
+      }
+      doubleClickCheck.current.prevent = false;
+    }, DBL_CLICK_DELAY);
+  };
+  const onNodeDoubleClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    e.stopPropagation();
+    clearTimeout(doubleClickCheck.current.timer);
+    doubleClickCheck.current.prevent = true;
+    onSelectNode(item);
+  };
+
+  const renderNode = (n: ITreeItem) => (
+    <TreeNode
+      key={n.id}
+      item={n}
+      className={className}
+      activeClassName={activeClassName}
+      contentClassName={contentClassName}
+      iconBoxClassName={iconBoxClassName}
+      iconClassName={iconClassName}
+      labelClassName={labelClassName}
+      renderData={renderData}
+      renderIcon={renderIcon}
+      loader={loader}
+    />
+  );
 
   return (
     <div
       className={cn(
-        'tree-node',
-        withChilds ? 'parent' : 'child',
-        expanded && 'expanded'
+        s.node,
+        selected && s.selected,
+        className,
+        selected && activeClassName
       )}
-      onClick={onNodeExpand}
+      onClick={onNodeClick}
+      onDoubleClick={onNodeDoubleClick}
     >
-      <span className="tree-label">{item.label}</span>
+      <NodeContent className={contentClassName}>
+        <NodeIcon
+          isParent={withChilds}
+          expanded={expanded}
+          className={iconBoxClassName}
+          iconClassName={iconClassName}
+        >
+          {typeof renderIcon === 'function' &&
+            renderIcon(expanded, selected, withChilds, item)}
+        </NodeIcon>
+        <NodeLabel className={labelClassName}>{item.label}</NodeLabel>
+        {typeof renderData === 'function' && renderData(item, selected)}
+      </NodeContent>
+      {children}
       {withChilds &&
         expanded &&
-        (Array.isArray(item.childs) ? (
-          item.childs.map(renderNode)
-        ) : (
-          <div className="tree-info">Loading...</div>
-        ))}
+        (Array.isArray(item.childs)
+          ? item.childs.map(renderNode)
+          : loader || <div className="Wood-info Wood-info_loading">...</div>)}
     </div>
   );
 };
-
-export function renderNode(item: ITreeItem) {
-  return <TreeNode key={item.id} item={item} />;
-}

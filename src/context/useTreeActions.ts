@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import { treeActionsContext } from './treeContext';
+import { ITreeActions, treeActionsContext } from './treeContext';
 
-export const useTreeActions = () => {
+export const useTreeActions = (): ITreeActions => {
   return useContext(treeActionsContext);
 };
