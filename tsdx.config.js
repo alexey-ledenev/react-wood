@@ -1,6 +1,7 @@
 const postcss = require('rollup-plugin-postcss');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
+const svgr = require('@svgr/rollup');
 
 module.exports = {
   /**
@@ -23,10 +24,13 @@ module.exports = {
             ],
           }),
         ],
+        extract: false,
+        modules: true,
         minimize: true,
         use: ['sass'],
       })
     );
+    config.plugins.push(svgr());
     return config;
   },
 };
