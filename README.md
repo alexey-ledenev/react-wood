@@ -2,6 +2,4 @@
 > A tree view component for React.
 
 ## License
-[MIT][license]
-
-[license]: ./LICENSE.md
+MIT © [Alexey Ledenev](https://github.com/alexey-ledenev)
