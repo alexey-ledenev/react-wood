@@ -1,7 +1,7 @@
 const postcss = require('rollup-plugin-postcss');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
-const svgr = require('@svgr/rollup');
+const svgr = require('@svgr/rollup').default;
 
 module.exports = {
   /**
