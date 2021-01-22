@@ -1,6 +1,6 @@
 import React, { FC, HTMLAttributes } from 'react';
 import cn from './utils/classNames';
-import { ReactComponent as CarretSvg } from './svg/carret-right.svg';
+import CarretSvg from './svg/CarretRight';
 import s from './styles/Tree.module.sass';
 
 export interface INodeIconProps extends HTMLAttributes<HTMLDivElement> {
