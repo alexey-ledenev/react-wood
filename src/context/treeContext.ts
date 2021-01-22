@@ -1,7 +1,15 @@
-import { createContext, Dispatch } from 'react';
-import { getInitialTreeState, ITreeState, Action } from './treeReducer';
+import { createContext } from 'react';
+import { ITreeItem } from '../types';
+import { noop } from '../utils';
+import { getInitialTreeState, ITreeState } from './treeReducer';
 
 export const treeStateContext = createContext<ITreeState>(
   getInitialTreeState()
 );
-export const treeDispatchContext = createContext<Dispatch<Action>>(() => {});
+
+export interface ITreeActions {
+  toggleExpanded: (item: ITreeItem) => void;
+}
+export const treeActionsContext = createContext<ITreeActions>({
+  toggleExpanded: noop,
+});

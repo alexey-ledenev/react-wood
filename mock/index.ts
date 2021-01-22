@@ -1,16 +1,14 @@
-import { ItemType, ITreeItem, IChildItem, IParentItem } from '../src';
+import { ITreeItem } from '../src';
 
 const DEEP = 5;
 const getId = () => `f${(~~(Math.random() * 1e8)).toString(16)}`;
-const getChildNode = (n = ''): IChildItem => ({
+const getChildNode = (n = ''): ITreeItem => ({
   id: getId(),
   label: `Child ${n}`,
-  type: ItemType.Item,
 });
-const getParentNode = (n = ''): IParentItem => ({
+const getParentNode = (n = ''): ITreeItem => ({
   id: getId(),
   label: `Parent ${n}`,
-  type: ItemType.Folder,
   childs: [],
 });
 
@@ -32,7 +30,6 @@ export const MOCK_DATA: ITreeItem[] = [
   {
     id: '1',
     label: 'Parent 1',
-    type: ItemType.Folder,
     childs: [
       { id: '11', label: 'Child 11' },
       { id: '12', label: 'Child 12' },
@@ -42,13 +39,11 @@ export const MOCK_DATA: ITreeItem[] = [
   {
     id: '2',
     label: 'Parent 2',
-    type: ItemType.Folder,
     childs: [
       { id: '21', label: 'Child 21' },
       {
         id: '22',
         label: 'Parent 22',
-        type: ItemType.Folder,
         childs: [
           { id: '221', label: 'Child 221' },
           { id: '222', label: 'Child 222' },
@@ -61,12 +56,10 @@ export const MOCK_DATA: ITreeItem[] = [
   {
     id: '3',
     label: 'Parent 3',
-    type: ItemType.Folder,
     childs: [
       {
         id: '31',
         label: 'Parent 31',
-        type: ItemType.Folder,
         childs: [
           { id: '311', label: 'Child 311' },
           { id: '312', label: 'Child 312' },

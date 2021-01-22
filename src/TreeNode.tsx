@@ -1,35 +1,35 @@
 import React, { FC } from 'react';
 import cn from './utils/classNames';
-import { actions } from './context/treeReducer';
-import { useTreeDispatch } from './context/useTreeDispatch';
+import { useTreeActions } from './context/useTreeActions';
 import { useTreeState } from './context/useTreeState';
-import { ItemType, ITreeItem } from './types';
+import { ITreeItem } from './types';
 
 export interface ITreeNodeProps {
   item: ITreeItem;
 }
 
 export const TreeNode: FC<ITreeNodeProps> = ({ item }) => {
-  const dispatch = useTreeDispatch();
+  const { toggleExpanded } = useTreeActions();
   const { expandedIds = Object.create(null) } = useTreeState();
-  const isFolder = item.type === ItemType.Folder;
+  const withChilds = item.childs !== void 0;
   const expanded = expandedIds[item.id] === true;
-  const onNodeClick = () => {
-    dispatch(actions.toggleExpanded(item.id));
+
+  const onNodeExpand = () => {
+    toggleExpanded(item);
   };
+
   return (
     <div
       className={cn(
         'tree-node',
-        isFolder ? 'parent' : 'child',
+        withChilds ? 'parent' : 'child',
         expanded && 'expanded'
       )}
-      onClick={onNodeClick}
+      onClick={onNodeExpand}
     >
       <span className="tree-label">{item.label}</span>
-      {isFolder &&
+      {withChilds &&
         expanded &&
-        item.childs !== void 0 &&
         (Array.isArray(item.childs) ? (
           item.childs.map(renderNode)
         ) : (
