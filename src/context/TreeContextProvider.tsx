@@ -6,6 +6,7 @@ import { actions, getInitialTreeState, treeReducer } from './treeReducer';
 interface ITreeContextProps {
   selectionType: SelectionType;
   multiSelect: boolean;
+  disabledIds?: ITreeItem['id'][];
   onExpand?: (node: ITreeItem) => void;
   onSelect?: (selectedNodes: ITreeItem[]) => void;
 }
@@ -13,6 +14,7 @@ interface ITreeContextProps {
 export const TreeContextProvider: FC<ITreeContextProps> = ({
   selectionType,
   multiSelect,
+  disabledIds,
   onExpand,
   onSelect,
   children,
@@ -27,13 +29,14 @@ export const TreeContextProvider: FC<ITreeContextProps> = ({
       },
       toggleSelected(item: ITreeItem) {
         if (selectionType === SelectionType.None) return;
+        if (disabledIds?.includes(item.id)) return;
         const isParent = item.childs !== void 0;
         if (selectionType === SelectionType.Parents && !isParent) return;
         if (selectionType === SelectionType.Childs && isParent) return;
         dispatch(actions.toggleSelected(item, multiSelect, onSelect));
       },
     }),
-    [dispatch, onExpand, onSelect, selectionType, multiSelect]
+    [dispatch, onExpand, onSelect, selectionType, multiSelect, disabledIds]
   );
 
   return (
