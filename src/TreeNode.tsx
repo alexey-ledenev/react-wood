@@ -47,7 +47,7 @@ export const TreeNode: FC<ITreeNodeProps> = ({
   });
   const { toggleExpanded, toggleSelected } = useTreeActions();
   const { expandedIds, selectedNodes } = useTreeState();
-  const withChilds = item.childs !== void 0;
+  const withChildren = item.children !== void 0;
   const expanded = expandedIds?.[item.id] === true;
   const selected = selectedNodes?.[item.id] !== undefined;
 
@@ -104,22 +104,22 @@ export const TreeNode: FC<ITreeNodeProps> = ({
     >
       <NodeContent className={contentClassName}>
         <NodeIcon
-          isParent={withChilds}
+          isParent={withChildren}
           expanded={expanded}
           className={iconBoxClassName}
           iconClassName={iconClassName}
         >
           {typeof renderIcon === 'function' &&
-            renderIcon(expanded, selected, withChilds, item)}
+            renderIcon(expanded, selected, withChildren, item)}
         </NodeIcon>
         <NodeLabel className={labelClassName}>{item.label}</NodeLabel>
         {typeof renderData === 'function' && renderData(item, selected)}
       </NodeContent>
       {children}
-      {withChilds &&
+      {withChildren &&
         expanded &&
-        (Array.isArray(item.childs)
-          ? item.childs.map(renderNode)
+        (Array.isArray(item.children)
+          ? item.children.map(renderNode)
           : loader || <div className="Wood-info Wood-info_loading">...</div>)}
     </div>
   );

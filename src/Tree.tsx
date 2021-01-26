@@ -9,7 +9,7 @@ export interface ITreeProps {
   nodes: ITreeItem[];
   /**
    * Тип элементов, доступных для выбора:
-   * дочерние ('childs'), родительские ('parents'), все ('all').
+   * дочерние ('child'), родительские ('parent'), все ('all').
    * Для отключения возможности выбора используется свойство 'none' (установлено по-умолчанию).
    */
   selectionType?: SelectionType;

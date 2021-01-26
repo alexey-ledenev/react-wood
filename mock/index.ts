@@ -9,7 +9,7 @@ const getChildNode = (n = ''): ITreeItem => ({
 const getParentNode = (n = ''): ITreeItem => ({
   id: getId(),
   label: `Parent ${n}`,
-  childs: [],
+  children: [],
 });
 
 export const generateTreeData = (currentDeep = 0, deep = DEEP): ITreeItem[] => {
@@ -17,7 +17,7 @@ export const generateTreeData = (currentDeep = 0, deep = DEEP): ITreeItem[] => {
   for (let i = 0; i < deep; i++) {
     if (Math.random() > 0.5 && currentDeep < deep) {
       const p = getParentNode(`${currentDeep}-${i}`);
-      p.childs = generateTreeData(i);
+      p.children = generateTreeData(i);
       nodes.push(p);
     } else {
       nodes.push(getChildNode(`${currentDeep}-${i}`));
@@ -30,7 +30,7 @@ export const MOCK_DATA: ITreeItem[] = [
   {
     id: '1',
     label: 'Parent 1',
-    childs: [
+    children: [
       { id: '11', label: 'Child 11' },
       { id: '12', label: 'Child 12' },
       { id: '13', label: 'Child 13' },
@@ -39,12 +39,12 @@ export const MOCK_DATA: ITreeItem[] = [
   {
     id: '2',
     label: 'Parent 2',
-    childs: [
+    children: [
       { id: '21', label: 'Child 21' },
       {
         id: '22',
         label: 'Parent 22',
-        childs: [
+        children: [
           { id: '221', label: 'Child 221' },
           { id: '222', label: 'Child 222' },
           { id: '223', label: 'Child 223' },
@@ -56,11 +56,11 @@ export const MOCK_DATA: ITreeItem[] = [
   {
     id: '3',
     label: 'Parent 3',
-    childs: [
+    children: [
       {
         id: '31',
         label: 'Parent 31',
-        childs: [
+        children: [
           { id: '311', label: 'Child 311' },
           { id: '312', label: 'Child 312' },
           { id: '313', label: 'Child 313' },

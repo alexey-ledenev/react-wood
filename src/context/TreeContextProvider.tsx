@@ -24,15 +24,15 @@ export const TreeContextProvider: FC<ITreeContextProps> = ({
   const treeActions = useMemo(
     () => ({
       toggleExpanded(item: ITreeItem) {
-        if (item.childs === void 0) return;
+        if (item.children === void 0) return;
         dispatch(actions.toggleExpanded(item, onExpand));
       },
       toggleSelected(item: ITreeItem) {
         if (selectionType === SelectionType.None) return;
         if (disabledIds?.includes(item.id)) return;
-        const isParent = item.childs !== void 0;
-        if (selectionType === SelectionType.Parents && !isParent) return;
-        if (selectionType === SelectionType.Childs && isParent) return;
+        const isParent = item.children !== void 0;
+        if (selectionType === SelectionType.Parent && !isParent) return;
+        if (selectionType === SelectionType.Child && isParent) return;
         dispatch(actions.toggleSelected(item, multiSelect, onSelect));
       },
     }),
