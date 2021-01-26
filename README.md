@@ -1,6 +1,9 @@
 # React-Wood
-> A tree view component for React.
-[![NPM](https://img.shields.io/npm/v/react-wood.svg)](https://www.npmjs.com/package/react-wood)
+
+[![NPM](https://img.shields.io/npm/v/react-wood?style=flat)](https://www.npmjs.com/package/react-wood)
+[![npm bundle size](https://img.shields.io/bundlephobia/min/react-wood?color=success&label=minified&style=flat)](https://bundlephobia.com/result?p=react-wood)
+
+> 🌳 A tree view component for React.
 
 ## Installation
 ### NPM
