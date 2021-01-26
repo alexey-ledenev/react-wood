@@ -80,5 +80,15 @@
     "tsdx": "^0.14.1",
     "tslib": "^2.1.0",
     "typescript": "^4.1.3"
-  }
+  },
+  "keywords": [
+    "react",
+    "reactjs",
+    "typescript",
+    "javascript",
+    "tree",
+    "tree-structure",
+    "treeview",
+    "tree-list"
+  ]
 }
