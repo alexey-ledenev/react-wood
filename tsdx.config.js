@@ -23,8 +23,6 @@ module.exports = {
             ],
           }),
         ],
-        extract: false,
-        modules: true,
         minimize: true,
         use: ['sass'],
       })
