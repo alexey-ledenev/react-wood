@@ -11,22 +11,16 @@ export const getInitialTreeState = (): ITreeState => ({
 });
 
 export const actions = {
-  toggleExpanded: (node: ITreeItem, cb?: (node: ITreeItem) => void) =>
+  toggleExpanded: (node: ITreeItem) =>
     ({
       type: 'TOGGLE_EXPANDED',
       node,
-      cb,
     } as const),
-  toggleSelected: (
-    node: ITreeItem,
-    allowMultiple: boolean,
-    cb?: (selectedNodes: ITreeItem[]) => void
-  ) =>
+  toggleSelected: (node: ITreeItem, allowMultiple: boolean) =>
     ({
       type: 'TOGGLE_SELECTED',
       node,
       allowMultiple,
-      cb,
     } as const),
 };
 
@@ -38,34 +32,22 @@ export const treeReducer = (state: ITreeState, action: Action) => {
     case 'TOGGLE_EXPANDED': {
       const nodeId = action.node.id;
       const expanded = !state.expandedIds[nodeId];
-      if (expanded === true && typeof action.cb === 'function') {
-        action.cb(action.node);
-      }
       return {
         ...state,
         expandedIds: { ...state.expandedIds, [nodeId]: expanded },
       };
     }
     case 'TOGGLE_SELECTED': {
-      const nodeId = action.node.id;
-      const selected = state.selectedNodes[nodeId] !== undefined;
-      let selectedNodes;
+      const { node } = action;
+      const selected = state.selectedNodes[node.id] !== undefined;
+      let selectedNodes: ITreeState['selectedNodes'] = {
+        [node.id]: selected === true ? undefined : node,
+      };
       if (action.allowMultiple) {
         selectedNodes = {
           ...state.selectedNodes,
-          [nodeId]: selected ? undefined : action.node,
+          ...selectedNodes,
         };
-      } else {
-        if (selected) return state;
-        selectedNodes = { [nodeId]: action.node };
-      }
-      if (typeof action.cb === 'function') {
-        const selectedNodesArr: ITreeItem[] = [];
-        for (let id in selectedNodes) {
-          if (selectedNodes[id] !== undefined)
-            selectedNodesArr.push(selectedNodes[id] as ITreeItem);
-        }
-        action.cb(selectedNodesArr);
       }
       return {
         ...state,

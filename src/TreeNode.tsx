@@ -62,7 +62,7 @@ export const TreeNode: FC<ITreeNodeProps> = ({
         if (e.ctrlKey || e.metaKey) {
           onSelectNode(item);
         } else {
-          toggleExpanded(item);
+          toggleExpanded(item, expanded);
         }
       }
       doubleClickCheck.current.prevent = false;

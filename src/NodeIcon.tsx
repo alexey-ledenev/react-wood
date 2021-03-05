@@ -17,7 +17,7 @@ export const NodeIcon: FC<INodeIconProps> = ({
   children,
   ...attrs
 }) => {
-  if (!children && !isParent) {
+  if (isParent !== true && !children) {
     return null;
   }
   return (
