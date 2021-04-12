@@ -1,5 +1,7 @@
+export type ID = string | number;
+
 export interface ITreeItem {
-  id: string | number;
+  id: ID;
   label: string;
   children?: ITreeItem[] | null;
 }

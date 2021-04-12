@@ -1,4 +1,4 @@
-export type ClassValue =
+type ClassValue =
   | ClassArray
   | ClassDictionary
   | string
@@ -7,11 +7,11 @@ export type ClassValue =
   | boolean
   | undefined;
 
-export interface ClassDictionary {
+interface ClassDictionary {
   [id: string]: any;
 }
 
-export interface ClassArray extends Array<ClassValue> {}
+interface ClassArray extends Array<ClassValue> {}
 
 function toVal(mix: ClassValue) {
   var k,
