@@ -1,12 +1,12 @@
 import React, { FC, useEffect, useMemo, useReducer } from 'react';
-import { ITreeItem, SelectionType } from '../types';
+import { ID, ITreeItem, SelectionType } from '../types';
 import { treeStateContext, treeActionsContext } from './treeContext';
 import { actions, getInitialTreeState, treeReducer } from './treeReducer';
 
 interface ITreeContextProps {
   selectionType: SelectionType;
   multiSelect: boolean;
-  disabledIds?: ITreeItem['id'][];
+  disabledIds?: ID[];
   onExpand?: (node: ITreeItem) => void;
   onSelect?: (selectedNodes: ITreeItem[]) => void;
 }
@@ -26,14 +26,15 @@ export const TreeContextProvider: FC<ITreeContextProps> = ({
       toggleExpanded(item: ITreeItem, expanded: boolean) {
         if (item.children === void 0) return;
         dispatch(actions.toggleExpanded(item));
-        if (!expanded && typeof onExpand === 'function') onExpand(item);
+        if (expanded !== true && typeof onExpand === 'function') onExpand(item);
       },
       toggleSelected(item: ITreeItem) {
         if (selectionType === SelectionType.None) return;
         if (disabledIds?.includes(item.id)) return;
         const isParent = item.children !== void 0;
-        if (selectionType === SelectionType.Parent && !isParent) return;
-        if (selectionType === SelectionType.Child && isParent) return;
+        if (selectionType === SelectionType.Parent && isParent === false)
+          return;
+        if (selectionType === SelectionType.Child && isParent === true) return;
         dispatch(actions.toggleSelected(item, multiSelect));
       },
     }),

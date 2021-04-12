@@ -1,6 +1,5 @@
-import { ITreeItem } from '../types';
+import { ID, ITreeItem } from '../types';
 
-type ID = ITreeItem['id'];
 export interface ITreeState {
   expandedIds: Record<ID, boolean>;
   selectedNodes: Record<ID, ITreeItem | undefined>;
@@ -38,17 +37,11 @@ export const treeReducer = (state: ITreeState, action: Action) => {
       };
     }
     case 'TOGGLE_SELECTED': {
-      const { node } = action;
-      const selected = state.selectedNodes[node.id] !== undefined;
-      let selectedNodes: ITreeState['selectedNodes'] = {
-        [node.id]: selected === true ? undefined : node,
+      const selected = state.selectedNodes[action.node.id] !== undefined;
+      const selectedNodes: ITreeState['selectedNodes'] = {
+        ...(action.allowMultiple === true ? state.selectedNodes : {}),
+        [action.node.id]: selected === true ? undefined : action.node,
       };
-      if (action.allowMultiple) {
-        selectedNodes = {
-          ...state.selectedNodes,
-          ...selectedNodes,
-        };
-      }
       return {
         ...state,
         selectedNodes,
