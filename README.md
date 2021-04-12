@@ -6,16 +6,59 @@
 > 🌳 A tree view component for React.
 
 ## Installation
-### NPM
+### With NPM
 ```sh
-npm install --save react-wood
+npm install react-wood
 ```
 
-**or**
-
-### Yarn
+### With Yarn
 ```sh
 yarn add react-wood
+```
+
+## Getting Started
+
+```jsx
+import { Tree } from 'react-wood';
+
+const nodes = [
+  {
+    id: '1',
+    label: 'Parent 1',
+    children: [
+      { id: '11', label: 'Child 11' },
+      { id: '12', label: 'Child 12' },
+    ],
+  },
+  {
+    id: '2',
+    label: 'Parent 2',
+    children: [
+      { id: '21', label: 'Child 21' },
+      {
+        id: '22',
+        label: 'Parent 22',
+        children: [
+          { id: '221', label: 'Child 221' },
+          { id: '222', label: 'Child 222' },
+        ],
+      },
+      { id: '23', label: 'Child 23' },
+    ],
+  }
+];
+
+const App = () => {
+  return (
+    <div>
+      <Tree
+        nodes={nodes}
+        selectionType="child"
+        multipleSelection={true}
+      />
+    </div>
+  );
+};
 ```
 
 ## License
