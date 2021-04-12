@@ -1,56 +1,57 @@
 import React, { FC, ReactNode } from 'react';
 import cn from './utils/classNames';
+import { ID, ITreeItem, SelectionType } from './types';
 import { TreeContextProvider } from './context/TreeContextProvider';
 import { TreeNode } from './TreeNode';
-import { ITreeItem, SelectionType } from './types';
 import s from './styles/Tree.module.sass';
 
 export interface ITreeProps {
   nodes: ITreeItem[];
   /**
-   * Тип элементов, доступных для выбора:
-   * дочерние ('child'), родительские ('parent'), все ('all').
-   * Для отключения возможности выбора используется свойство 'none' (установлено по-умолчанию).
+   * Elements available for selection:
+   * 'child', 'parent', 'all'.
+   * To disable selection use 'none' (by default).
    */
   selectionType?: SelectionType;
-  /** Разрешен ли выбор нескольких элементов. */
+  /**
+   * Is multiple selection allowed.
+   */
   multipleSelection?: boolean;
   /**
-   * Отключить выбор для заданных элементов.
+   * Disable selection of specified items.
    */
-  disabledIds?: ITreeItem['id'][];
-  /** Класс контейнера дерева. */
+  disabledIds?: ID[];
   containerClassName?: string;
-  /** Класс узла дерева. */
   nodeClassName?: string;
-  /** Класс выбранного узла дерева. */
   nodeActiveClassName?: string;
   nodeContentClassName?: string;
-  /** Класс контейнера иконки. */
   nodeIconBoxClassName?: string;
-  /** Класс иконки. */
   nodeIconClassName?: string;
-  /** Класс текста узла дерева. */
   nodeLabelClassName?: string;
-  /** Функция, которая будет вызвана при открытии элемента. */
-  onNodeExpand?: (node: ITreeItem) => void;
   /**
-   * Функция, которая будет вызвана при выборе очередного элемента.
-   * selectedNodes: массив выбранных в текущий момент элементов.
+   * Called when an item is expanded.
+   * @param expandedNode Expanded item.
+   */
+  onNodeExpand?: (expandedNode: ITreeItem) => void;
+  /**
+   * Called when an item is selected.
+   * @param selectedNodes An array of the currently selected items.
    */
   onSelect?: (selectedNodes: ITreeItem[]) => void;
-  /** Функция для отрисовки дополнительных элементов внутри узла. */
-  renderNodeData?: (node: ITreeItem, selected: boolean) => ReactNode;
-  /** Функция для отрисовки иконки узла. */
+  /**
+   * Function for drawing additional content inside the node.
+   */
+  renderNodeData?: (node: ITreeItem, isNodeSelected: boolean) => ReactNode;
+  /**
+   * Function for drawing a node icon.
+   */
   renderNodeIcon?: (
-    expanded: boolean,
-    selected: boolean,
-    isParentEl: boolean,
+    isNodeExpanded: boolean,
+    isNodeSelected: boolean,
+    isParentNode: boolean,
     node: ITreeItem
   ) => ReactNode;
-  /** Элемент для отображения загрузки. */
   loader?: ReactNode;
-  /** Элемент для отображения отсутствия данных. */
   noData?: ReactNode;
 }
 
