@@ -1,6 +1,7 @@
-import React, { FC, ReactNode, useRef } from 'react';
+import React, { FC, ReactNode } from 'react';
 import cn from './utils/classNames';
-import { ITreeItem } from './types';
+import { isSelectableItem } from './utils/tree';
+import { ITreeItem, SelectionType } from './types';
 import { useTreeActions, useTreeState } from './context';
 import { NodeContent } from './NodeContent';
 import { NodeLabel } from './NodeLabel';
@@ -9,6 +10,7 @@ import s from './styles/Tree.module.sass';
 
 export interface ITreeNodeProps {
   item: ITreeItem;
+  selectionType: SelectionType;
   className?: string;
   activeClassName?: string;
   contentClassName?: string;
@@ -25,10 +27,9 @@ export interface ITreeNodeProps {
   loader?: ReactNode;
 }
 
-const DBL_CLICK_DELAY = 200;
-
 export const TreeNode: FC<ITreeNodeProps> = ({
   item,
+  selectionType,
   className,
   activeClassName,
   contentClassName,
@@ -40,44 +41,33 @@ export const TreeNode: FC<ITreeNodeProps> = ({
   loader,
   children,
 }) => {
-  const doubleClickCheck = useRef({
-    timer: 0,
-    prevent: false,
-  });
   const { toggleExpanded, toggleSelected } = useTreeActions();
   const { expandedIds, selectedNodes } = useTreeState();
+
   const withChildren = item.children !== void 0;
   const expanded = expandedIds?.[item.id] === true;
   const selected = selectedNodes?.[item.id] !== undefined;
-
-  const onSelectNode = (node: ITreeItem) => {
-    toggleSelected(node);
-  };
+  const selectable = isSelectableItem(selectionType, withChildren);
 
   const onNodeClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     e.stopPropagation();
-    doubleClickCheck.current.timer = window.setTimeout(() => {
-      if (!doubleClickCheck.current.prevent) {
-        if (e.ctrlKey || e.metaKey) {
-          onSelectNode(item);
-        } else {
-          toggleExpanded(item, expanded);
-        }
-      }
-      doubleClickCheck.current.prevent = false;
-    }, DBL_CLICK_DELAY);
+    if (selectable === false) {
+      toggleExpanded(item, expanded);
+    } else {
+      toggleSelected(item);
+    }
   };
-  const onNodeDoubleClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+
+  const onIconClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     e.stopPropagation();
-    clearTimeout(doubleClickCheck.current.timer);
-    doubleClickCheck.current.prevent = true;
-    onSelectNode(item);
+    toggleExpanded(item, expanded);
   };
 
   const renderNode = (n: ITreeItem) => (
     <TreeNode
       key={n.id}
       item={n}
+      selectionType={selectionType}
       className={className}
       activeClassName={activeClassName}
       contentClassName={contentClassName}
@@ -99,7 +89,6 @@ export const TreeNode: FC<ITreeNodeProps> = ({
         selected && activeClassName
       )}
       onClick={onNodeClick}
-      onDoubleClick={onNodeDoubleClick}
     >
       <NodeContent className={contentClassName}>
         <NodeIcon
@@ -107,6 +96,7 @@ export const TreeNode: FC<ITreeNodeProps> = ({
           expanded={expanded}
           className={iconBoxClassName}
           iconClassName={iconClassName}
+          onClick={onIconClick}
         >
           {typeof renderIcon === 'function' &&
             renderIcon(expanded, selected, withChildren, item)}

@@ -79,6 +79,7 @@ export const Tree: FC<ITreeProps> = ({
     <TreeNode
       key={n.id}
       item={n}
+      selectionType={selectionType}
       className={nodeClassName}
       activeClassName={nodeActiveClassName}
       contentClassName={nodeContentClassName}
