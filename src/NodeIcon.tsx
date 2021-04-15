@@ -1,6 +1,6 @@
 import React, { FC, HTMLAttributes } from 'react';
 import cn from './utils/classNames';
-import CarretSvg from './svg/CarretRight';
+import AngleRight from './svg/AngleRight';
 import s from './styles/Tree.module.sass';
 
 export interface INodeIconProps extends HTMLAttributes<HTMLDivElement> {
@@ -23,7 +23,7 @@ export const NodeIcon: FC<INodeIconProps> = ({
   return (
     <div className={cn(s.node_icon, className)} {...attrs}>
       {children || (
-        <CarretSvg
+        <AngleRight
           className={cn(s.parent_svg, expanded && s.expanded, iconClassName)}
         />
       )}

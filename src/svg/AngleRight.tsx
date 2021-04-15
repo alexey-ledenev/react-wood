@@ -1,6 +1,6 @@
 import React, { FC, SVGProps } from 'react';
 
-const CarretRight: FC<SVGProps<SVGSVGElement>> = (props) => (
+const AngleRight: FC<SVGProps<SVGSVGElement>> = (props) => (
   <svg
     width="8"
     viewBox="0 0 8 9"
@@ -15,4 +15,4 @@ const CarretRight: FC<SVGProps<SVGSVGElement>> = (props) => (
   </svg>
 );
 
-export default CarretRight;
+export default AngleRight;
