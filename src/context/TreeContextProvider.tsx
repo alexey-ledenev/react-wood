@@ -1,6 +1,10 @@
 import React, { FC, useEffect, useMemo, useReducer } from 'react';
 import { ID, ITreeItem, SelectionType } from '../types';
-import { treeStateContext, treeActionsContext } from './treeContext';
+import {
+  treeStateContext,
+  treeActionsContext,
+  ITreeActions,
+} from './treeContext';
 import { actions, getInitialTreeState, treeReducer } from './treeReducer';
 
 interface ITreeContextProps {
@@ -21,7 +25,7 @@ export const TreeContextProvider: FC<ITreeContextProps> = ({
 }) => {
   const [state, dispatch] = useReducer(treeReducer, getInitialTreeState());
 
-  const treeActions = useMemo(
+  const treeActions = useMemo<ITreeActions>(
     () => ({
       toggleExpanded(item: ITreeItem, expanded: boolean) {
         if (item.children === void 0) return;

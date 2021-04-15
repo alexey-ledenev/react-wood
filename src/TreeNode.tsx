@@ -1,8 +1,7 @@
 import React, { FC, ReactNode, useRef } from 'react';
 import cn from './utils/classNames';
 import { ITreeItem } from './types';
-import { useTreeActions } from './context/useTreeActions';
-import { useTreeState } from './context/useTreeState';
+import { useTreeActions, useTreeState } from './context';
 import { NodeContent } from './NodeContent';
 import { NodeLabel } from './NodeLabel';
 import { NodeIcon } from './NodeIcon';

@@ -1,7 +1,7 @@
 import React, { FC, ReactNode } from 'react';
 import cn from './utils/classNames';
 import { ID, ITreeItem, SelectionType } from './types';
-import { TreeContextProvider } from './context/TreeContextProvider';
+import { TreeContextProvider } from './context';
 import { TreeNode } from './TreeNode';
 import s from './styles/Tree.module.sass';
 
