@@ -102,8 +102,9 @@ export const Tree: FC<ITreeProps> = ({
       <div className={cn(s.container, containerClassName)}>
         {children}
         {!nodes?.length
-          ? !children &&
-            (noData || (
+          ? children !== void 0 &&
+            children !== null &&
+            (noData ?? (
               <div className="Wood-info Wood-info_noData">No data</div>
             ))
           : nodes.map(renderNode)}
