@@ -4,6 +4,7 @@ export const isSelectableItem = (
   selectionType: SelectionType,
   isParent: boolean
 ) =>
-  selectionType === SelectionType.All ||
-  (selectionType === SelectionType.Parent && isParent === true) ||
-  (selectionType === SelectionType.Child && isParent === false);
+  selectionType !== SelectionType.None &&
+  (selectionType === SelectionType.All ||
+    (selectionType === SelectionType.Parent && isParent === true) ||
+    (selectionType === SelectionType.Child && isParent === false));

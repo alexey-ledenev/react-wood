@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useMemo, useReducer } from 'react';
 import { ID, ITreeItem, SelectionType } from '../types';
+import { isSelectableItem } from '../utils/tree';
 import {
   treeStateContext,
   treeActionsContext,
@@ -33,12 +34,12 @@ export const TreeContextProvider: FC<ITreeContextProps> = ({
         if (expanded !== true && typeof onExpand === 'function') onExpand(item);
       },
       toggleSelected(item: ITreeItem) {
-        if (selectionType === SelectionType.None) return;
-        if (disabledIds?.includes(item.id)) return;
-        const isParent = item.children !== void 0;
-        if (selectionType === SelectionType.Parent && isParent === false)
+        if (
+          isSelectableItem(selectionType, item.children !== void 0) === false ||
+          disabledIds?.includes(item.id)
+        ) {
           return;
-        if (selectionType === SelectionType.Child && isParent === true) return;
+        }
         dispatch(actions.toggleSelected(item, multiSelect));
       },
     }),
