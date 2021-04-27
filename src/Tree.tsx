@@ -39,11 +39,13 @@ export interface ITreeProps {
    */
   onSelect?: (selectedNodes: ITreeItem[]) => void;
   /**
-   * Function for drawing additional content inside the node.
+   * A function for drawing additional content inside nodes.
+   * @param node A node object.
+   * @param isNodeSelected Indicates whether this item is selected.
    */
   renderNodeData?: (node: ITreeItem, isNodeSelected: boolean) => ReactNode;
   /**
-   * Function for drawing a node icon.
+   * A function for drawing icons.
    */
   renderNodeIcon?: (
     isNodeExpanded: boolean,
@@ -51,7 +53,13 @@ export interface ITreeProps {
     isParentNode: boolean,
     node: ITreeItem
   ) => ReactNode;
+  /**
+   * A ReactNode for indicating nodes loading state.
+   */
   loader?: ReactNode;
+  /**
+   * A ReactNode for indicating empty tree.
+   */
   noData?: ReactNode;
 }
 
