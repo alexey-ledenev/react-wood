@@ -69,7 +69,8 @@ const renderNodeIcon = (
 
 const App = () => {
   const handleNodeExpand = (expandedNode: ITreeItem) => {
-    // here you can make a request to get child nodes
+    // here you can make a request to get child nodes:
+    // fetch(`api.com/nodes/${expandedNode.id}/children`)...
     console.log('Expanded: ', expandedNode);
   };
 
@@ -158,11 +159,11 @@ Example:
 ```
 
 ### Tree component props typings
-Prop | Description | Type
+Prop | Description | Typings
 ------------ | ------------- | -------------
-nodes | Tree nodes array (see `Nodes format`) | ITreeItem[]
-selectionType? | Indicates the type of nodes available for selection | 'child', 'parent', 'all', 'none' (default: 'none')
-multipleSelection? | Is multiple selection allowed | boolean (default: false)
+nodes | Tree nodes (`ITreeItem`) array (see `Nodes format`) | ITreeItem[]
+selectionType? | Indicates the type of nodes available for selection | `child`, `parent`, `all`, `none` (default: `none`)
+multipleSelection? | Is multiple selection allowed | boolean (default: `false`)
 disabledIds? | Disable selection of specified nodes | (string | number)[]
 containerClassName? |  | string
 nodeClassName? |  | string
