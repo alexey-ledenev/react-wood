@@ -2,7 +2,7 @@
   "name": "react-wood",
   "description": "A tree view component for React",
   "author": "Alexey L.",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "license": "MIT",
   "repository": "https://github.com/alexey-ledenev/react-wood.git",
   "main": "dist/index.js",
