@@ -1,31 +1,5 @@
 import { ITreeItem } from '../src';
 
-const DEEP = 5;
-const getId = () => `f${(~~(Math.random() * 1e8)).toString(16)}`;
-const getChildNode = (n = ''): ITreeItem => ({
-  id: getId(),
-  label: `Child ${n}`,
-});
-const getParentNode = (n = ''): ITreeItem => ({
-  id: getId(),
-  label: `Parent ${n}`,
-  children: [],
-});
-
-export const generateTreeData = (currentDeep = 0, deep = DEEP): ITreeItem[] => {
-  const nodes: ITreeItem[] = [];
-  for (let i = 0; i < deep; i++) {
-    if (Math.random() > 0.5 && currentDeep < deep) {
-      const p = getParentNode(`${currentDeep}-${i}`);
-      p.children = generateTreeData(i);
-      nodes.push(p);
-    } else {
-      nodes.push(getChildNode(`${currentDeep}-${i}`));
-    }
-  }
-  return nodes;
-};
-
 export const MOCK_DATA: ITreeItem[] = [
   {
     id: '1',
