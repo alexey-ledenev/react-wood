@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
+.tree-container {
+  border-left: 1px solid #222;
+  padding-left: 0.75rem;
+  font-family: 'Lato', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.tree-node {
+  color: #222;
+}
+.tree-node_active {
+  color: coral;
+}
+
+.tree-node__icon-box {
+  font-size: 1.25rem;
+}
+
+.tree-node__icon-box:hover, .tree-node__label:hover {
+  background-color: #f2f2f2;
+  transition: background-color .3s ease-in;
+}
